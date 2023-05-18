@@ -1,8 +1,9 @@
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from apps.users.models import BankUser
-from apps.users.serializer import BankUserSerializer, RegisterUserSerializer
+from .models import BankUser
+
+from apps.users.serializer import UserSerializer ,RegisterUserSerializer, UserDetailSerializer
 
 # Create your views here.
 class UserAPI(GenericViewSet,
@@ -12,9 +13,13 @@ class UserAPI(GenericViewSet,
               mixins.RetrieveModelMixin,
               mixins.DestroyModelMixin):
     queryset = BankUser.objects.all()
-    serializer_class = BankUserSerializer
+    serializer_class = UserSerializer
 
     def get_serializer_class(self):
         if self.action in ('create', ):
             return RegisterUserSerializer
-        return BankUserSerializer
+        if self.action in ('retrieve', ):
+            return UserDetailSerializer
+        return UserSerializer
+
+    

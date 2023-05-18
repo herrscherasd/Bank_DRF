@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from apps.bank.models import TransferMoney
+from .models import HistoryTransfer
 
-class TransferMoneySerializer(serializers.ModelSerializer):
+class HistoryTransferSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TransferMoney
-        fields = ('id', 'from_user', 'to_user', 'amount', 'status' , 'created')
+        model = HistoryTransfer
+        fields = ('id', 'from_user', 'to_user','is_completed', 'created_at', 'amount')

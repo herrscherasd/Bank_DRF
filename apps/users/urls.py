@@ -10,8 +10,8 @@ router.register('users', UserAPI, basename="users")
 
 
 urlpatterns = [
-    path('login/', TokenObtainPairView.as_view(), name = "api_login"),
-    path('refresh/', TokenRefreshView.as_view(), name = "api_refresh"),
+    path('users/login/', TokenObtainPairView.as_view(), name = "api_login"),
+    path('users/refresh/', TokenRefreshView.as_view(), name = "api_refresh"),
     
 ]
 

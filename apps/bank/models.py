@@ -1,12 +1,9 @@
 from django.db import models
 
 # Create your models here.
-from django.db import models
-
-# Create your models here.
 from apps.users.models import BankUser
 
-class TransferMoney(models.Model):
+class HistoryTransfer(models.Model):
     from_user = models.ForeignKey(
         BankUser,
         on_delete=models.CASCADE,
@@ -19,21 +16,20 @@ class TransferMoney(models.Model):
         related_name="to_user",
         verbose_name="Пользователю"
     )
-    status = models.BooleanField(
+    is_completed = models.BooleanField(
         default=False,
         verbose_name="Статус"
     )
-    created = models.DateTimeField(
+    created_at = models.DateTimeField(
         auto_now_add=True,
     )
     amount = models.CharField(
         max_length=255,
-        verbose_name="Сумма"
+        verbose_name="Количество"
     )
     def __str__(self):
         return self.amount 
     
     class Meta:
-        verbose_name = "Перевод"
-        verbose_name_plural = "Переводы"
-
+        verbose_name = "История"
+        verbose_name_plural = "История"

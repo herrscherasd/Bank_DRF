@@ -2,12 +2,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import  CreateAPIView
 
-from apps.bank.models import TransferMoney
-from apps.bank.serializer import TransferMoneySerializer
+from apps.bank.serializer import HistoryTransfer, HistoryTransferSerializer
 from apps.bank.models import BankUser
 
 class CreateTransferView(CreateAPIView):
-    serializer_class = TransferMoneySerializer
+    serializer_class = HistoryTransferSerializer
     def post(self, request):
         from_user_id = request.data.get('from_user')
         to_user_id = request.data.get('to_user')
@@ -21,10 +20,9 @@ class CreateTransferView(CreateAPIView):
             to_user.balance = float(to_user.balance) + float(amount)
             from_user.save()
             to_user.save()
-            transfer = TransferMoney.objects.create(from_user=from_user, to_user=to_user, amount=amount)
-            serializer = TransferMoneySerializer(transfer)
+            transfer = HistoryTransfer.objects.create(from_user=from_user, to_user=to_user, amount=amount)
+            serializer = HistoryTransferSerializer(transfer)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-            
         except BankUser.DoesNotExist:
             return Response({'detail': 'Пользователь не найден'}, status=status.HTTP_400_BAD_REQUEST)
         except ValueError:
