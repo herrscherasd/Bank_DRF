@@ -6,7 +6,7 @@ from apps.bank.serializer import HistoryTransferSerializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = BankUser
-        fields = ('id','username', 'email', 'phone_number', 'created_at', 'age', 'balance')
+        fields = ('id','username', 'email', 'phone_number')
 
 class UserDetailSerializer(serializers.ModelSerializer):
     from_user = HistoryTransferSerializer(read_only=True, many=True)
